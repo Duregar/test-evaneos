@@ -60,10 +60,11 @@ class TemplateManager
             (strpos($text, '[quote:destination_name]') !== false) and $text = str_replace('[quote:destination_name]',$destinationOfQuote->countryName,$text);
         }
 
-        if (isset($destination))
+        if (isset($destination)) {
             $text = str_replace('[quote:destination_link]', $usefulObject->url . '/' . $destination->countryName . '/quote/' . $_quoteFromRepository->id, $text);
-        else
+        } else {
             $text = str_replace('[quote:destination_link]', '', $text);
+        }
 
         /*
          * USER
