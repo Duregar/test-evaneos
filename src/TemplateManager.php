@@ -6,7 +6,6 @@ use Evaneos\Entity\Quote;
 use Evaneos\Entity\Template;
 use Evaneos\Entity\User;
 use Evaneos\Repository\DestinationRepository;
-use Evaneos\Repository\QuoteRepository;
 use Evaneos\Repository\SiteRepository;
 
 class TemplateManager
@@ -36,13 +35,12 @@ class TemplateManager
 
         if ($quote)
         {
-            $_quoteFromRepository = QuoteRepository::getInstance()->getById($quote->id);
             $usefulObject = SiteRepository::getInstance()->getById($quote->siteId);
             $destinationOfQuote = DestinationRepository::getInstance()->getById($quote->destinationId);
 
-            $text = str_replace('[quote:destination_link]', $usefulObject->url . '/' . $destinationOfQuote->countryName . '/quote/' . $_quoteFromRepository->id, $text);
-            $text = str_replace('[quote:summary_html]', Quote::renderHtml($_quoteFromRepository), $text);
-            $text = str_replace('[quote:summary]', Quote::renderText($_quoteFromRepository), $text);
+            $text = str_replace('[quote:destination_link]', $usefulObject->url . '/' . $destinationOfQuote->countryName . '/quote/' . $quote->id, $text);
+            $text = str_replace('[quote:summary_html]', Quote::renderHtml($quote), $text);
+            $text = str_replace('[quote:summary]', Quote::renderText($quote), $text);
             $text = str_replace('[quote:destination_name]', $destinationOfQuote->countryName,$text);
         }
 
