@@ -31,10 +31,14 @@ class TemplateManager
     {
         $data = array_merge($this->defaultData, $data);
 
-        $quote = (isset($data['quote']) and $data['quote'] instanceof Quote) ? $data['quote'] : null;
+        /*
+         * QUOTE
+         * [quote:*]
+         */
+        if (isset($data['quote']) and ($data['quote'] instanceof Quote)) {
+            /** @var Quote $quote */
+            $quote = $data['quote'];
 
-        if ($quote)
-        {
             $usefulObject = SiteRepository::getInstance()->getById($quote->siteId);
             $destinationOfQuote = DestinationRepository::getInstance()->getById($quote->destinationId);
 
@@ -48,9 +52,10 @@ class TemplateManager
          * USER
          * [user:*]
          */
-        $user = (isset($data['user']) and $data['user'] instanceof User) ? $data['user'] : null;
+        if (isset($data['user']) and ($data['user'] instanceof User)) {
+            /** @var User $user */
+            $user = $data['user'];
 
-        if ($user) {
             $text = str_replace('[user:first_name]', ucfirst(mb_strtolower($user->firstname)), $text);
         }
 
