@@ -39,13 +39,13 @@ class TemplateManager
             /** @var Quote $quote */
             $quote = $data['quote'];
 
-            $usefulObject = SiteRepository::getInstance()->getById($quote->siteId);
-            $destinationOfQuote = DestinationRepository::getInstance()->getById($quote->destinationId);
+            $site = SiteRepository::getInstance()->getById($quote->siteId);
+            $destination = DestinationRepository::getInstance()->getById($quote->destinationId);
 
-            $text = str_replace('[quote:destination_link]', $usefulObject->url . '/' . $destinationOfQuote->countryName . '/quote/' . $quote->id, $text);
+            $text = str_replace('[quote:destination_link]', $site->url . '/' . $destination->countryName . '/quote/' . $quote->id, $text);
             $text = str_replace('[quote:summary_html]', Quote::renderHtml($quote), $text);
             $text = str_replace('[quote:summary]', Quote::renderText($quote), $text);
-            $text = str_replace('[quote:destination_name]', $destinationOfQuote->countryName,$text);
+            $text = str_replace('[quote:destination_name]', $destination->countryName, $text);
         }
 
         /*
