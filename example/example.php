@@ -7,6 +7,7 @@ require_once __DIR__ . '/../src/Entity/Quote.php';
 require_once __DIR__ . '/../src/Entity/Site.php';
 require_once __DIR__ . '/../src/Entity/Template.php';
 require_once __DIR__ . '/../src/Entity/User.php';
+require_once __DIR__ . '/../src/Factory/TemplateManagerFactory.php';
 require_once __DIR__ . '/../src/Helper/SingletonTrait.php';
 require_once __DIR__ . '/../src/Context/ApplicationContext.php';
 require_once __DIR__ . '/../src/Repository/Repository.php';
@@ -30,7 +31,7 @@ Bien cordialement,
 L'équipe Evaneos.com
 www.evaneos.com
 ");
-$templateManager = new TemplateManager();
+$templateManager = TemplateManagerFactory::buildTemplateManager();
 
 $message = $templateManager->getTemplateComputed(
     $template,
