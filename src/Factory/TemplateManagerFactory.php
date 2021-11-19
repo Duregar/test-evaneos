@@ -11,6 +11,9 @@ class TemplateManagerFactory
     {
         $applicationContext = ApplicationContext::getInstance();
 
-        return new TemplateManager($applicationContext->getCurrentSite(), $applicationContext->getCurrentUser());
+        return new TemplateManager([
+            'user' => $applicationContext->getCurrentUser(),
+            'site' => $applicationContext->getCurrentSite()
+        ]);
     }
 }

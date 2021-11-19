@@ -3,7 +3,6 @@
 namespace Evaneos;
 
 use Evaneos\Entity\Quote;
-use Evaneos\Entity\Site;
 use Evaneos\Entity\Template;
 use Evaneos\Entity\User;
 use Evaneos\Repository\DestinationRepository;
@@ -12,16 +11,12 @@ use Evaneos\Repository\SiteRepository;
 
 class TemplateManager
 {
-    /** @var User */
-    private $currentUser;
+    /** @var array */
+    private $defaultData;
 
-    /** @var Site */
-    private $currentSite;
-
-    public function __construct(Site $currentSite, User $currentUser)
+    public function __construct(array $defaultData = [])
     {
-        $this->currentSite = $currentSite;
-        $this->currentUser = $currentUser;
+        $this->defaultData = $defaultData;
     }
 
     public function getTemplateComputed(Template $tpl, array $data)
@@ -35,6 +30,8 @@ class TemplateManager
 
     private function computeText($text, array $data)
     {
+        $data = array_merge($this->defaultData, $data);
+
         $quote = (isset($data['quote']) and $data['quote'] instanceof Quote) ? $data['quote'] : null;
 
         if ($quote)
@@ -53,8 +50,11 @@ class TemplateManager
          * USER
          * [user:*]
          */
-        $_user  = (isset($data['user'])  and ($data['user']  instanceof User))  ? $data['user']  : $this->currentUser;
-        $text = str_replace('[user:first_name]', ucfirst(mb_strtolower($_user->firstname)), $text);
+        $user = (isset($data['user']) and $data['user'] instanceof User) ? $data['user'] : null;
+
+        if ($user) {
+            $text = str_replace('[user:first_name]', ucfirst(mb_strtolower($user->firstname)), $text);
+        }
 
         return $text;
     }
