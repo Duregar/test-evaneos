@@ -5,6 +5,8 @@ class TemplateManagerFactory
 {
     static public function buildTemplateManager()
     {
-        return new TemplateManager();
+        $applicationContext = ApplicationContext::getInstance();
+
+        return new TemplateManager($applicationContext->getCurrentSite(), $applicationContext->getCurrentUser());
     }
 }
