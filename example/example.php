@@ -1,5 +1,9 @@
 <?php
 
+use Evaneos\Entity\Quote;
+use Evaneos\Entity\Template;
+use Evaneos\Factory\TemplateManagerFactory;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 require_once __DIR__ . '/../src/Entity/Destination.php';

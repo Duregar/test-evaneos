@@ -1,5 +1,9 @@
 <?php
 
+namespace Evaneos\Factory;
+
+use Evaneos\Context\ApplicationContext;
+use Evaneos\TemplateManager;
 
 class TemplateManagerFactory
 {

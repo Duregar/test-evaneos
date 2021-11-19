@@ -1,5 +1,10 @@
 <?php
 
+namespace Evaneos\Repository;
+
+use Evaneos\Entity\Quote;
+use Evaneos\Helper\SingletonTrait;
+
 class QuoteRepository implements Repository
 {
     use SingletonTrait;
@@ -11,7 +16,7 @@ class QuoteRepository implements Repository
      */
     public function getById($id)
     {
-        $generator = Faker\Factory::create();
+        $generator = \Faker\Factory::create();
         $generator->seed($id);
         return new Quote(
             $id,

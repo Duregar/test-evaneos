@@ -1,5 +1,15 @@
 <?php
 
+namespace Evaneos;
+
+use Evaneos\Entity\Quote;
+use Evaneos\Entity\Site;
+use Evaneos\Entity\Template;
+use Evaneos\Entity\User;
+use Evaneos\Repository\DestinationRepository;
+use Evaneos\Repository\QuoteRepository;
+use Evaneos\Repository\SiteRepository;
+
 class TemplateManager
 {
     /** @var User */

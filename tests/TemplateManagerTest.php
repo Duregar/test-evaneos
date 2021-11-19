@@ -1,5 +1,11 @@
 <?php
 
+use Evaneos\Context\ApplicationContext;
+use Evaneos\Entity\Quote;
+use Evaneos\Entity\Template;
+use Evaneos\Factory\TemplateManagerFactory;
+use Evaneos\Repository\DestinationRepository;
+
 require_once __DIR__ . '/../src/Entity/Destination.php';
 require_once __DIR__ . '/../src/Entity/Quote.php';
 require_once __DIR__ . '/../src/Entity/Site.php';
