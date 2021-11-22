@@ -3,6 +3,7 @@
 namespace Evaneos\Factory;
 
 use Evaneos\Context\ApplicationContext;
+use Evaneos\Formatter\UserFormatter;
 use Evaneos\TemplateManager;
 
 class TemplateManagerFactory
@@ -11,9 +12,13 @@ class TemplateManagerFactory
     {
         $applicationContext = ApplicationContext::getInstance();
 
-        return new TemplateManager([
+        $templateManager = new TemplateManager([
             'user' => $applicationContext->getCurrentUser(),
             'site' => $applicationContext->getCurrentSite()
         ]);
+
+        $templateManager->addFormatter(new UserFormatter());
+
+        return $templateManager;
     }
 }

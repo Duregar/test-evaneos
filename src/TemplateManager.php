@@ -63,17 +63,6 @@ class TemplateManager
             $this->replaceTag($template, 'quote:summary', Quote::renderText($quote));
             $this->replaceTag($template, 'quote:destination_name', $destination->countryName);
         }
-
-        /*
-         * USER
-         * [user:*]
-         */
-        if (isset($data['user']) and ($data['user'] instanceof User)) {
-            /** @var User $user */
-            $user = $data['user'];
-
-            $this->replaceTag($template, 'user:first_name', ucfirst(mb_strtolower($user->firstname)));
-        }
     }
 
     /**
