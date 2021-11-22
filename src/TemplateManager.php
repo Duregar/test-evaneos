@@ -5,6 +5,7 @@ namespace Evaneos;
 use Evaneos\Entity\Quote;
 use Evaneos\Entity\Template;
 use Evaneos\Entity\User;
+use Evaneos\Formatter\FormatterInterface;
 use Evaneos\Repository\DestinationRepository;
 use Evaneos\Repository\SiteRepository;
 
@@ -13,9 +14,17 @@ class TemplateManager
     /** @var array */
     private $defaultData;
 
+    /** @var FormatterInterface[] */
+    private $formatters = [];
+
     public function __construct(array $defaultData = [])
     {
         $this->defaultData = $defaultData;
+    }
+
+    public function addFormatter(FormatterInterface $formatter)
+    {
+        $this->formatters[] = $formatter;
     }
 
     public function getTemplateComputed(Template $tpl, array $data)
