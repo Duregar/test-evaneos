@@ -9,6 +9,18 @@ use Evaneos\Repository\SiteRepository;
 
 class QuoteFormatter extends AbstractTagFormatter
 {
+    /** @var SiteRepository */
+    private $siteRepository;
+
+    /** @var DestinationRepository */
+    private $destinationRepository;
+
+    public function __construct(SiteRepository $siteRepository, DestinationRepository $destinationRepository)
+    {
+        $this->siteRepository = $siteRepository;
+        $this->destinationRepository = $destinationRepository;
+    }
+
     /**
      * @inheritDoc
      */
@@ -25,8 +37,8 @@ class QuoteFormatter extends AbstractTagFormatter
         /** @var Quote $quote */
         $quote = $data['quote'];
 
-        $site = SiteRepository::getInstance()->getById($quote->siteId);
-        $destination = DestinationRepository::getInstance()->getById($quote->destinationId);
+        $site = $this->siteRepository->getById($quote->siteId);
+        $destination = $this->destinationRepository->getById($quote->destinationId);
 
         $this->replaceTag($template, 'quote:destination_link', $site->url . '/' . $destination->countryName . '/quote/' . $quote->id);
         $this->replaceTag($template, 'quote:summary_html', Quote::renderHtml($quote));
