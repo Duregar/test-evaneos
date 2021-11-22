@@ -40,6 +40,13 @@ class TemplateManager
     {
         $data = array_merge($this->defaultData, $data);
 
+        /** @var FormatterInterface $formatter */
+        foreach ($this->formatters as $formatter) {
+            if ($formatter->isRequirementValid($data)) {
+                $formatter->format($template, $data);
+            }
+        }
+
         /*
          * QUOTE
          * [quote:*]
