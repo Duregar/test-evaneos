@@ -46,23 +46,6 @@ class TemplateManager
                 $formatter->format($template, $data);
             }
         }
-
-        /*
-         * QUOTE
-         * [quote:*]
-         */
-        if (isset($data['quote']) and ($data['quote'] instanceof Quote)) {
-            /** @var Quote $quote */
-            $quote = $data['quote'];
-
-            $site = SiteRepository::getInstance()->getById($quote->siteId);
-            $destination = DestinationRepository::getInstance()->getById($quote->destinationId);
-
-            $this->replaceTag($template, 'quote:destination_link', $site->url . '/' . $destination->countryName . '/quote/' . $quote->id);
-            $this->replaceTag($template, 'quote:summary_html', Quote::renderHtml($quote));
-            $this->replaceTag($template, 'quote:summary', Quote::renderText($quote));
-            $this->replaceTag($template, 'quote:destination_name', $destination->countryName);
-        }
     }
 
     /**

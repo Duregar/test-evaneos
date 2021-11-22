@@ -3,6 +3,7 @@
 namespace Evaneos\Factory;
 
 use Evaneos\Context\ApplicationContext;
+use Evaneos\Formatter\QuoteFormatter;
 use Evaneos\Formatter\UserFormatter;
 use Evaneos\TemplateManager;
 
@@ -17,6 +18,7 @@ class TemplateManagerFactory
             'site' => $applicationContext->getCurrentSite()
         ]);
 
+        $templateManager->addFormatter(new QuoteFormatter());
         $templateManager->addFormatter(new UserFormatter());
 
         return $templateManager;
