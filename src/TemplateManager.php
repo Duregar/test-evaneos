@@ -21,13 +21,13 @@ class TemplateManager
     public function getTemplateComputed(Template $tpl, array $data)
     {
         $replaced = clone($tpl);
-        $replaced->subject = $this->computeText($replaced->subject, $data);
-        $replaced->content = $this->computeText($replaced->content, $data);
+
+        $this->computeTemplate($replaced, $data);
 
         return $replaced;
     }
 
-    private function computeText($text, array $data)
+    private function computeTemplate(Template $template, array $data)
     {
         $data = array_merge($this->defaultData, $data);
 
@@ -42,10 +42,10 @@ class TemplateManager
             $site = SiteRepository::getInstance()->getById($quote->siteId);
             $destination = DestinationRepository::getInstance()->getById($quote->destinationId);
 
-            $text = $this->replaceTag($text, 'quote:destination_link', $site->url . '/' . $destination->countryName . '/quote/' . $quote->id);
-            $text = $this->replaceTag($text, 'quote:summary_html', Quote::renderHtml($quote));
-            $text = $this->replaceTag($text, 'quote:summary', Quote::renderText($quote));
-            $text = $this->replaceTag($text, 'quote:destination_name', $destination->countryName);
+            $this->replaceTag($template, 'quote:destination_link', $site->url . '/' . $destination->countryName . '/quote/' . $quote->id);
+            $this->replaceTag($template, 'quote:summary_html', Quote::renderHtml($quote));
+            $this->replaceTag($template, 'quote:summary', Quote::renderText($quote));
+            $this->replaceTag($template, 'quote:destination_name', $destination->countryName);
         }
 
         /*
@@ -56,20 +56,18 @@ class TemplateManager
             /** @var User $user */
             $user = $data['user'];
 
-            $text = $this->replaceTag($text, 'user:first_name', ucfirst(mb_strtolower($user->firstname)));
+            $this->replaceTag($template, 'user:first_name', ucfirst(mb_strtolower($user->firstname)));
         }
-
-        return $text;
     }
 
     /**
-     * @param string $text
+     * @param Template $template
      * @param string $tag
      * @param string $replacement
-     * @return string
      */
-    protected function replaceTag($text, $tag, $replacement)
+    protected function replaceTag(Template $template, $tag, $replacement)
     {
-        return str_replace("[$tag]", $replacement, $text);
+        $template->subject = str_replace("[$tag]", $replacement, $template->subject);
+        $template->content = str_replace("[$tag]", $replacement, $template->content);
     }
 }
