@@ -7,7 +7,7 @@ use Evaneos\Entity\Template;
 use Evaneos\Repository\DestinationRepository;
 use Evaneos\Repository\SiteRepository;
 
-class QuoteFormatter implements FormatterInterface
+class QuoteFormatter extends AbstractTagFormatter
 {
     /**
      * @inheritDoc
@@ -32,16 +32,5 @@ class QuoteFormatter implements FormatterInterface
         $this->replaceTag($template, 'quote:summary_html', Quote::renderHtml($quote));
         $this->replaceTag($template, 'quote:summary', Quote::renderText($quote));
         $this->replaceTag($template, 'quote:destination_name', $destination->countryName);
-    }
-
-    /**
-     * @param Template $template
-     * @param string $tag
-     * @param string $replacement
-     */
-    protected function replaceTag(Template $template, $tag, $replacement)
-    {
-        $template->subject = str_replace("[$tag]", $replacement, $template->subject);
-        $template->content = str_replace("[$tag]", $replacement, $template->content);
     }
 }
