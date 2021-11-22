@@ -23,9 +23,10 @@ class TemplateManager
         $this->formatters[] = $formatter;
     }
 
-    public function getTemplateComputed(Template $tpl, array $data)
+    public function getTemplateComputed(Template $tpl, array $data = [])
     {
         $replaced = clone($tpl);
+        $data = array_merge($this->defaultData, $data);
 
         $this->computeTemplate($replaced, $data);
 
@@ -34,8 +35,6 @@ class TemplateManager
 
     private function computeTemplate(Template $template, array $data)
     {
-        $data = array_merge($this->defaultData, $data);
-
         /** @var FormatterInterface $formatter */
         foreach ($this->formatters as $formatter) {
             if ($formatter->isRequirementValid($data)) {
